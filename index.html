@@ -4,97 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selección de Consulta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Enlace a Google Fonts para usar Montserrat y Source Serif Pro -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Source+Serif+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Source Serif Pro', serif; /* Fuente Source Serif Pro */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-image: url('https://campus.blackwell.university/pluginfile.php/1/theme_alpha/loginbg/1731598420/portada-campus-virtual.jpg'); /* Reemplaza con tu imagen */
+            background-size: cover;
+            background-repeat: no-repeat; /* Evita que la imagen se duplique */
+            background-position: center;
             height: 100vh;
-            background: #f4f4f4; /* Fondo uniforme y sobrio */
-            color: #333;
-        }
-        .popup {
-            background: #ffffff; /* Fondo blanco para el cuadro */
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 600px;
-            width: 90%;
-        }
-        .popup h1 {
-            font-family: 'Montserrat', sans-serif; /* Fuente Montserrat para el título */
-            font-size: 32px; /* Tamaño de letra más grande */
-            margin-bottom: 30px;
-            color: #333;
-            font-weight: 600; /* Texto en negrita */
-        }
-        .popup h1 span {
-            font-family: 'Source Serif Pro', serif; /* Fuente Source Serif Pro para el texto en inglés */
-            font-weight: 400; /* Sin negrita */
-            font-style: normal; /* Sin cursiva */
-            font-size: 28px; /* Tamaño de letra más grande */
-            color: #555; /* Color más suave */
-        }
-        .button-container {
+            margin: 0;
             display: flex;
             justify-content: center;
-            gap: 20px;
-        }
-        .button-container button {
-            flex: 1;
-            padding: 20px 30px;
-            font-size: 22px; /* Tamaño de letra más grande */
-            border: 2px solid #007bff; /* Borde azul profesional */
-            border-radius: 8px;
-            cursor: pointer;
-            background: transparent; /* Fondo transparente */
-            color: #007bff; /* Texto azul */
-            transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
             align-items: center;
+            padding: 0;
+            color: #333;
+        }
+        .floating-form {
+            background-color: white;
+            padding: 4rem 5rem 4rem 5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .floating-form img {
+            max-width: 170px;
+            margin-bottom: 1rem;
+        }
+
+        .floating-form h1 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .button-group {
+            display: flex;
             justify-content: center;
-            gap: 10px;
-            font-family: 'Source Serif Pro', serif; /* Fuente Source Serif Pro para los botones */
+            gap: 1rem;
+            margin-top: 40px;
         }
-        .button-container button:hover {
-            background: #007bff; /* Fondo azul al pasar el mouse */
-            color: white; /* Texto blanco al pasar el mouse */
-            transform: scale(1.05); /* Efecto de agrandamiento */
+
+        .btn {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 35px 55px 35px 55px;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            font-size: 20px;
         }
-        .button-container button:nth-child(2) {
-            border-color: #28a745; /* Borde verde profesional */
-            color: #28a745; /* Texto verde */
+
+        .btn:hover {
+            background-color: #0056b3; /* Cambia el color según el botón */
+            color: white;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
         }
-        .button-container button:nth-child(2):hover {
-            background: #28a745; /* Fondo verde al pasar el mouse */
-            color: white; /* Texto blanco al pasar el mouse */
+        @media (max-width: 576px) {
+            .button-group {
+                flex-direction: column;
+            }
+            .btn {
+                padding: 35px 40px 35px 40px;
+            }
         }
-        .button-container button span {
-            font-style: normal; /* Sin cursiva */
-            font-size: 18px; /* Tamaño de letra más grande */
-            color: #555; /* Color más suave */
-        }
+
+        /* SweetAlert custom styles */
+       .swal2-confirm {
+           background-color: #007bff !important; /* Azul bootstrap */
+           color: white !important;
+           border: none;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+       }
+
+       .swal2-cancel {
+           background-color: #6c757d !important; /* Gris bootstrap */
+           color: white !important;
+           border: none;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+       }
+
+       .swal2-confirm:hover {
+           background-color: #0056b3 !important;
+       }
+
+       .swal2-cancel:hover {
+           background-color: #5a6268 !important;
+       }
     </style>
 </head>
 <body>
-    <div class="popup">
-        <h1>Seleccione su tipo de consulta <br> <span>(Select your type of query)</span></h1>
-        <div class="button-container">
-            <button onclick="window.location.href='https://blackwell.university/support/'">
-                Académicos <br> <span>(Academic)</span>
-            </button>
-            <button onclick="window.location.href='https://blackwell.university/lp/enlaces/area-de-cobranzas/'">
-                Cobranzas <br> <span>(Collections)</span>
-            </button>
-        </div>
-    </div>
+  <div class="floating-form">
+       <img src="https://campus.blackwell.university/pluginfile.php/1/theme_alpha/customlogindmlogo/1731598420/logo-campus-virtual.png" alt="Logo"> <!-- Reemplaza con tu logo -->
+       <h2>Seleccione su tipo de consulta</h2> <span>(Select your type of query)</span> <br>
+       <div class="button-group">
+           <button onclick="window.location.href='https://blackwell.university/support/'" type="button" class="btn btn-primary">
+             Académicos <br> <span>(Academic)</span></button>
+           <button type="button" id="button2" class="btn btn-secondary">
+             Cobranzas <br> <span>(Collections)</span></button>
+       </div>
+   </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('button2').addEventListener('click', function() {
+            Swal.fire({
+                title: '<h3>¿Deseas realizar un Ticket de Atención?</h3>',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = 'https://neumann-education.github.io/formbgu/'; // URL para "Sí"
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    window.location.href = 'https://blackwell.university/lp/enlaces/area-de-cobranzas/'; // URL para "No"
+                }
+            });
+        });
+    </script>
 </body>
 </html>
